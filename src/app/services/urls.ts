@@ -4,7 +4,7 @@ export function encodeLsbUrl(indexBit: number, stepByte: number) {
     if (indexBit) {
         url = `${url}?bitIndex=${indexBit}`;
       // tslint:disable-next-line:no-unused-expression
-        stepByte ? url = `${url}&stepByte=&${stepByte}` : {};
+        stepByte ? url = `${url}&stepByte=${stepByte}` : {};
     } else if (stepByte) {
         url = `${url}?stepByte=${stepByte}`;
     }

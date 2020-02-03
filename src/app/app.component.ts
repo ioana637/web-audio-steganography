@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { WindowRef } from './windowref.service';
 import { AudioService } from './services/audio.service';
 import { Subscription } from 'rxjs';
+import { fromBlobToFile } from './services/utils';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +63,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   encodeWithLSB() {
     this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText, this.bitIndex, this.stepByte).subscribe((res) => {
-      console.log(res);
+      const fileAudioResult = fromBlobToFile(res, 'result.mp3');
+      var reader = new FileReader();
+      reader.readAsDataURL(<File>fileAudioResult);
+      reader.onload = (_event) => {
+        const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
+        this.resultAudioUrl = blob.createObjectURL(fileAudioResult);
+        document.getElementById('audioControlResult').setAttribute('src', this.resultAudioUrl);
+      }
     }, (err) => {
       console.log(err);
     }));
@@ -78,7 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   changeStepByte(event) {
-    if (this.fileAudio && this.fileText) { 
+    if (this.fileAudio && this.fileText) {
       this.maximumValueForStep = this.fileAudio.size / (this.fileText.size * 8);
     }
   }
