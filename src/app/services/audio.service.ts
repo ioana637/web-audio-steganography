@@ -27,6 +27,10 @@ export class AudioService {
     formData.append('audioFile', audioFile);
     formData.append('textFile', textFile);
 
-    return this.http.post(encodeEchoHidingUrl, formData);
+    return this.http.post(encodeEchoHidingUrl, formData,
+      {
+        headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': 'application/octetstream' },
+        responseType: 'blob'
+      });
   }
 }

@@ -15,9 +15,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   fileAudio: File = null;
   fileText: File = null;
-  audioType = 'data:audio/mpeg;base64,';
+  audioType = 'data:audio/wav;base64,';
 
-  audioEncodeUrl: any = '../assets/Beethoven.wav';
+  audioEncodeUrl: any;
   resultAudioUrl: any;
 
   fileTextContent: string | ArrayBuffer;
@@ -63,22 +63,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   encodeWithLSB() {
     this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText, this.bitIndex, this.stepByte).subscribe((res) => {
-      const fileAudioResult = fromBlobToFile(res, 'result.mp3');
-      var reader = new FileReader();
-      reader.readAsDataURL(<File>fileAudioResult);
-      reader.onload = (_event) => {
-        const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
-        this.resultAudioUrl = blob.createObjectURL(fileAudioResult);
-        document.getElementById('audioControlResult').setAttribute('src', this.resultAudioUrl);
-      }
+      this.processAudioResult(res);
     }, (err) => {
       console.log(err);
     }));
   }
 
+  private processAudioResult(res: Blob) {
+    const fileAudioResult = fromBlobToFile(res, 'result.wav');
+    var reader = new FileReader();
+    reader.readAsDataURL(<File>fileAudioResult);
+    reader.onload = (_event) => {
+      const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
+      this.resultAudioUrl = blob.createObjectURL(fileAudioResult);
+      document.getElementById('audioControlResult').setAttribute('src', this.resultAudioUrl);
+    };
+  }
+
   encodeWithEchoHiding() {
     this.subscriptions.push(this.audioService.encodeWithEchoHiding(this.fileAudio, this.fileText).subscribe((res) => {
-      console.log(res);
+      this.processAudioResult(res);
     }, (err) => {
       console.log(err);
     }));
