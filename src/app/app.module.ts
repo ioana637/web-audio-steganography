@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudioService } from './services/audio.service';
 import { WindowRef } from './windowref.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,8 @@ import { WindowRef } from './windowref.service';
     BrowserAnimationsModule,
     NgxAudioPlayerModule,
     TabViewModule,
+    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [WindowRef, AudioService],

@@ -36,9 +36,19 @@
     </div>
     <div class="row m-3">
       <div class="col-2">
+        <input [(ngModel)]="bitIndex" type="number" min="0" max="7" placeholder="Bit Index">
+      </div>
+      <div class="col-2">
+        <input [(ngModel)]="stepByte" type="number" min="1" [max]="maximumValueForStep" (change)="changeStepByte($event)"
+        placeholder="Step Byte">
+      </div>
+      <div class="col-2">
         <button class="btn btn-primary" (click)="encodeWithLSB()">Encode with LSB</button>
       </div>
-      <div class="col-2 ml-3">
+      
+    </div>
+    <div class="row m-3">
+      <div class="col-2">
         <button class="btn btn-primary" (click)="encodeWithEchoHiding()">Encode with Echo Hiding</button>
       </div>
     </div>

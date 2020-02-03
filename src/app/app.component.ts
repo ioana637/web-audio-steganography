@@ -23,6 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
+  stepByte: number;
+  maximumValueForStep: number;
+  bitIndex: number;
+
   constructor(private sanitizer: DomSanitizer,
     private audioService: AudioService,
     private winRef: WindowRef) {
@@ -57,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   encodeWithLSB() {
-    this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText).subscribe((res) => {
+    this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText, this.bitIndex, this.stepByte).subscribe((res) => {
       console.log(res);
     }, (err) => {
       console.log(err);
@@ -71,6 +75,12 @@ export class AppComponent implements OnInit, OnDestroy {
       console.log(err);
     }));
 
+  }
+
+  changeStepByte(event) {
+    if (this.fileAudio && this.fileText) { 
+      this.maximumValueForStep = this.fileAudio.size / (this.fileText.size * 8);
+    }
   }
 
 }
