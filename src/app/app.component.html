@@ -5,7 +5,21 @@
 </div>
 <div class="row mt-3">
   <div class="col-6">
-    <mat-basic-audio-player [audioUrl]="msbapAudioUrl" [title]="msbapTitle" [autoPlay]="false" muted="muted"
+    <!-- <mat-basic-audio-player [(audioUrl)]="msbapAudioUrl" [title]="msbapTitle" [autoPlay]="true"
       [displayTitle]="msbapDisplayTitle" [displayVolumeControls]="msaapDisplayVolumeControls"></mat-basic-audio-player>
+     -->
+
+    <audio controls id="audioControl">
+      <source [src]="" type="audio/mpeg" id="audioSource">
+
+    </audio>
+  </div>
+  <div class="col-6">
+    <input type="file" id="file" name="fileAudio" value="" (change)="previewAudio($event)" />
+  </div>
+  <div class="row mt-3">
+    <div class="col-6">
+
+    </div>
   </div>
 </div>

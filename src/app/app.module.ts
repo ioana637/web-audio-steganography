@@ -5,6 +5,7 @@ import { NgxAudioPlayerModule } from 'ngx-audio-player';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WindowRef } from './windowref.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     NgxAudioPlayerModule
   ],
-  providers: [],
+  providers: [WindowRef ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
