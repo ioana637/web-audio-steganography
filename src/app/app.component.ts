@@ -59,15 +59,17 @@ export class AppComponent implements OnInit, OnDestroy {
   encodeWithLSB() {
     this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText).subscribe((res) => {
       console.log(res);
+    }, (err) => {
+      console.log(err);
     }));
-    console.log('LSB');
   }
 
   encodeWithEchoHiding() {
     this.subscriptions.push(this.audioService.encodeWithEchoHiding(this.fileAudio, this.fileText).subscribe((res) => {
       console.log(res);
+    }, (err) => {
+      console.log(err);
     }));
-    console.log('EchoHiding');
 
   }
 
