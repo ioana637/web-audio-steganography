@@ -10,7 +10,8 @@ import { WindowRef } from './windowref.service';
 export class AppComponent implements OnInit {
   title = 'web-audio-steganography';
 
-  file: File = null;
+  fileAudio: File = null;
+  fileText: File = null;
   audioType = 'data:audio/mpeg;base64,';
 
   msbapTitle = 'Audio';
@@ -19,6 +20,8 @@ export class AppComponent implements OnInit {
   msbapDisplayTitle = true;
   msbapDisplayVolumeControls = true;
   audio: HTMLAudioElement;
+  fileTextContent: string | ArrayBuffer;
+
   constructor(private sanitizer: DomSanitizer,
     private winRef: WindowRef) {
 
@@ -29,17 +32,23 @@ export class AppComponent implements OnInit {
   }
 
   previewAudio(event) {
-    this.file = event.target.files[0];
+    this.fileAudio = event.target.files[0];
     var reader = new FileReader();
-    reader.readAsDataURL(<File>this.file);
+    reader.readAsDataURL(<File>this.fileAudio);
     reader.onload = (_event) => {
       const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
-      this.msbapAudioUrl = blob.createObjectURL(this.file);
-        // console.log('File name: '+this.file.name);
-        // console.log('File type: '+this.file.type);
-        // console.log('File BlobURL: '+ this.msbapAudioUrl);
-        document.getElementById('audioControl').setAttribute('src', this.msbapAudioUrl);
+      this.msbapAudioUrl = blob.createObjectURL(this.fileAudio);
+      document.getElementById('audioControl').setAttribute('src', this.msbapAudioUrl);
     }
+  }
+
+  previewText(event) {
+    this.fileText = event.target.files[0];
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.fileTextContent = fileReader.result;
+    }
+    fileReader.readAsText(this.fileText);
   }
 
 }

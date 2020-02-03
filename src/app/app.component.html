@@ -3,7 +3,7 @@
     <h1>Audio Steganography</h1>
   </div>
 </div>
-<div class="row mt-3">
+<div class="row m-3">
   <div class="col-6">
     <!-- <mat-basic-audio-player [(audioUrl)]="msbapAudioUrl" [title]="msbapTitle" [autoPlay]="true"
       [displayTitle]="msbapDisplayTitle" [displayVolumeControls]="msaapDisplayVolumeControls"></mat-basic-audio-player>
@@ -15,11 +15,25 @@
     </audio>
   </div>
   <div class="col-6">
-    <input type="file" id="file" name="fileAudio" value="" (change)="previewAudio($event)" />
+    <input type="file" id="file" name="fileAudio" value="" accept="audio/mpeg, audio/wav"
+    (change)="previewAudio($event)" />
   </div>
-  <div class="row mt-3">
-    <div class="col-6">
+</div>
+<div class="row m-3">
+  <div class="col-6">
+    File with text to encode
+  </div>
+  <div class="col-6">
+    <input type="file" id="file" name="fileText" value="" accept="text/plain"
+    (change)="previewText($event)" />
+  </div>
+</div>
 
-    </div>
+<div class="row m-3" *ngIf="fileTextContent">
+  <div class="col-6">
+    File Content
+  </div>
+  <div class="col-6">
+    {{fileTextContent}}
   </div>
 </div>
