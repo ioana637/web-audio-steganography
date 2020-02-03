@@ -3,6 +3,7 @@ export function encodeLsbUrl(indexBit: number, stepByte: number) {
     let url = `${baseUrl}/lsb`;
     if (indexBit) {
         url = `${url}?bitIndex=${indexBit}`;
+      // tslint:disable-next-line:no-unused-expression
         stepByte ? url = `${url}&stepByte=&${stepByte}` : {};
     } else if (stepByte) {
         url = `${url}?stepByte=${stepByte}`;
