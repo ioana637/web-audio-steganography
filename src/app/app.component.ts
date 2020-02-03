@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WindowRef } from './windowref.service';
 import { AudioService } from './services/audio.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'web-audio-steganography';
 
   fileAudio: File = null;
@@ -20,6 +21,8 @@ export class AppComponent implements OnInit {
 
   fileTextContent: string | ArrayBuffer;
 
+  subscriptions: Subscription[] = [];
+
   constructor(private sanitizer: DomSanitizer,
     private audioService: AudioService,
     private winRef: WindowRef) {
@@ -27,6 +30,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
   previewAudio(event) {
@@ -49,11 +56,17 @@ export class AppComponent implements OnInit {
     fileReader.readAsText(this.fileText);
   }
 
-  encodeWithLSB(){
+  encodeWithLSB() {
+    this.subscriptions.push(this.audioService.encodeWithLSB(this.fileAudio, this.fileText).subscribe((res) => {
+      console.log(res);
+    }));
     console.log('LSB');
   }
 
   encodeWithEchoHiding() {
+    this.subscriptions.push(this.audioService.encodeWithEchoHiding(this.fileAudio, this.fileText).subscribe((res) => {
+      console.log(res);
+    }));
     console.log('EchoHiding');
 
   }
