@@ -8,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'web-audio-steganography';
 
-
+  msbapTitle = 'Audio';
+  msbapAudioUrl = '../assets/Beethoven.wav';   
+     
+  msbapDisplayTitle = true; 
+  msbapDisplayVolumeControls = true;
   constructor() {
     
   }
