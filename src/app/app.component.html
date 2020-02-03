@@ -3,37 +3,55 @@
     <h1>Audio Steganography</h1>
   </div>
 </div>
-<div class="row m-3">
-  <div class="col-6">
-    <!-- <mat-basic-audio-player [(audioUrl)]="msbapAudioUrl" [title]="msbapTitle" [autoPlay]="true"
-      [displayTitle]="msbapDisplayTitle" [displayVolumeControls]="msaapDisplayVolumeControls"></mat-basic-audio-player>
-     -->
+<p-tabView>
+  <p-tabPanel header="Encode" [selected]="true">
+    <h2>Encode</h2>
+    <div class="row m-3">
+      <div class="col-6">
+        <audio controls id="audioControlEncode">
+          <source [src]="" type="audio/mpeg" id="audioSource">
+        </audio>
+      </div>
+      <div class="col-6">
+        <input type="file" id="fileAudioEncode" name="fileAudio" value="" accept="audio/mpeg, audio/wav"
+          (change)="previewAudio($event)" />
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col-6">
+        File with text to encode
+      </div>
+      <div class="col-6">
+        <input type="file" id="fileText" name="fileText" value="" accept="text/plain" (change)="previewText($event)" />
+      </div>
+    </div>
 
-    <audio controls id="audioControl">
-      <source [src]="" type="audio/mpeg" id="audioSource">
-
-    </audio>
-  </div>
-  <div class="col-6">
-    <input type="file" id="file" name="fileAudio" value="" accept="audio/mpeg, audio/wav"
-    (change)="previewAudio($event)" />
-  </div>
-</div>
-<div class="row m-3">
-  <div class="col-6">
-    File with text to encode
-  </div>
-  <div class="col-6">
-    <input type="file" id="file" name="fileText" value="" accept="text/plain"
-    (change)="previewText($event)" />
-  </div>
-</div>
-
-<div class="row m-3" *ngIf="fileTextContent">
-  <div class="col-6">
-    File Content
-  </div>
-  <div class="col-6">
-    {{fileTextContent}}
-  </div>
-</div>
+    <div class="row m-3" *ngIf="fileTextContent">
+      <div class="col-6">
+        File Content
+      </div>
+      <div class="col-6">
+        "{{fileTextContent}}"
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col-2">
+        <button class="btn btn-primary" (click)="encodeWithLSB()">Encode with LSB</button>
+      </div>
+      <div class="col-2 ml-3">
+        <button class="btn btn-primary" (click)="encodeWithEchoHiding()">Encode with Echo Hiding</button>
+      </div>
+    </div>
+    <h3> Result</h3>
+    <div class="row m-3" *ngIf="resultAudioUrl">
+      <div class="col-6">
+        <audio controls id="audioControlResult">
+          <source [src]="resultAudioUrl" type="audio/mpeg" id="audioSource">
+        </audio>
+      </div>
+    </div>
+  </p-tabPanel>
+  <p-tabPanel header="Decode">
+    <h2>Decode</h2>
+  </p-tabPanel>
+</p-tabView>

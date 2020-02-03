@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { WindowRef } from './windowref.service';
+import { AudioService } from './services/audio.service';
 
 @Component({
   selector: 'app-root',
@@ -14,21 +15,18 @@ export class AppComponent implements OnInit {
   fileText: File = null;
   audioType = 'data:audio/mpeg;base64,';
 
-  msbapTitle = 'Audio';
-  msbapAudioUrl: any = '../assets/Beethoven.wav';
+  audioEncodeUrl: any = '../assets/Beethoven.wav';
+  resultAudioUrl: any;
 
-  msbapDisplayTitle = true;
-  msbapDisplayVolumeControls = true;
-  audio: HTMLAudioElement;
   fileTextContent: string | ArrayBuffer;
 
   constructor(private sanitizer: DomSanitizer,
+    private audioService: AudioService,
     private winRef: WindowRef) {
 
   }
 
   ngOnInit() {
-    this.audio = document.createElement("audio");
   }
 
   previewAudio(event) {
@@ -37,8 +35,8 @@ export class AppComponent implements OnInit {
     reader.readAsDataURL(<File>this.fileAudio);
     reader.onload = (_event) => {
       const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
-      this.msbapAudioUrl = blob.createObjectURL(this.fileAudio);
-      document.getElementById('audioControl').setAttribute('src', this.msbapAudioUrl);
+      this.audioEncodeUrl = blob.createObjectURL(this.fileAudio);
+      document.getElementById('audioControlEncode').setAttribute('src', this.audioEncodeUrl);
     }
   }
 
@@ -49,6 +47,15 @@ export class AppComponent implements OnInit {
       this.fileTextContent = fileReader.result;
     }
     fileReader.readAsText(this.fileText);
+  }
+
+  encodeWithLSB(){
+    console.log('LSB');
+  }
+
+  encodeWithEchoHiding() {
+    console.log('EchoHiding');
+
   }
 
 }
