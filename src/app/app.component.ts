@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   bitIndex: number;
   textLength: number;
   delayEchoHiding = 0;
+  hiddenMessage ='';
 
   constructor(private sanitizer: DomSanitizer,
     private audioService: AudioService,
@@ -84,8 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   decodeWithLSB() {
-    this.subscriptions.push(this.audioService.decodeWithLSB(this.fileAudio, this.bitIndex, this.stepByte, this.textLength).subscribe((res) => {
+    this.subscriptions.push(this.audioService.decodeWithLSB(this.fileAudioDecode, this.bitIndex, this.stepByte, this.textLength).subscribe((res) => {
       console.log(res);
+      this.hiddenMessage = res;
     }, (err) => {
       console.log(err);
     }));

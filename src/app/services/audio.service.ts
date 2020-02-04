@@ -28,6 +28,7 @@ export class AudioService {
     return this.http.post(decodeLsbUrl(bitIndex, stepByte, textLength), formData,
       {
         headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': '*' },
+        responseType: 'text'
       });
   }
 
