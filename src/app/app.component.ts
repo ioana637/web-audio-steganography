@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   stepByte: number;
   maximumValueForStep: number;
   bitIndex: number;
+  delayEchoHiding = 0;
 
   constructor(private sanitizer: DomSanitizer,
     private audioService: AudioService,
@@ -70,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private processAudioResult(res: Blob) {
-    const fileAudioResult = fromBlobToFile(res, 'result.wav');
+    const fileAudioResult = fromBlobToFile(res, 'result.wav', this.fileAudio.name);
     var reader = new FileReader();
     reader.readAsDataURL(<File>fileAudioResult);
     reader.onload = (_event) => {
@@ -81,7 +82,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   encodeWithEchoHiding() {
-    this.subscriptions.push(this.audioService.encodeWithEchoHiding(this.fileAudio, this.fileText).subscribe((res) => {
+    this.subscriptions.push(this.audioService.encodeWithEchoHiding(this.fileAudio, this.fileText, this.delayEchoHiding).subscribe((res) => {
       this.processAudioResult(res);
     }, (err) => {
       console.log(err);

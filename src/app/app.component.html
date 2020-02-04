@@ -9,7 +9,7 @@
     <div class="row m-3">
       <div class="col-6">
         <audio controls id="audioControlEncode">
-          <source [src]="" type="audio/mpeg;audio/wav" id="audioSource">
+          <source [src]="" type="audio/mpeg;audio/wave" id="audioSource">
         </audio>
       </div>
       <div class="col-6">
@@ -35,20 +35,23 @@
       </div>
     </div>
     <div class="row m-3">
-      <div class="col-2">
+      <div class="col-3">
         <input [(ngModel)]="bitIndex" type="number" min="0" max="7" placeholder="Bit Index">
       </div>
-      <div class="col-2">
-        <input [(ngModel)]="stepByte" type="number" min="1" [max]="maximumValueForStep" (change)="changeStepByte($event)"
-        placeholder="Step Byte">
+      <div class="col-3">
+        <input [(ngModel)]="stepByte" type="number" min="1" [max]="maximumValueForStep"
+          (change)="changeStepByte($event)" placeholder="Step Byte">
       </div>
-      <div class="col-2">
+      <div class="col-5">
         <button class="btn btn-primary" (click)="encodeWithLSB()">Encode with LSB</button>
       </div>
-      
+
     </div>
     <div class="row m-3">
-      <div class="col-2">
+      <div class="col-3">
+        <input [(ngModel)]="delayEchoHiding" type="number" min="0" placeholder="Delay" required step="0.01">
+      </div>
+      <div class="col-5">
         <button class="btn btn-primary" (click)="encodeWithEchoHiding()">Encode with Echo Hiding</button>
       </div>
     </div>
@@ -56,7 +59,7 @@
     <div class="row m-3">
       <div class="col-6">
         <audio controls id="audioControlResult">
-          <source [src]="" type="audio/wav;audio/mpeg" id="audioSource">
+          <source [src]="" type="audio/wave;audio/mpeg" id="audioSource">
         </audio>
       </div>
     </div>

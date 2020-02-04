@@ -10,4 +10,6 @@ export function encodeLsbUrl(indexBit: number, stepByte: number) {
     }
     return url;
 }
-export const encodeEchoHidingUrl = `${baseUrl}/echoHiding`;
+export function encodeEchoHidingUrl(delay: number) {
+    return `${baseUrl}/echoHiding?delay=${delay}`;
+} 

@@ -22,14 +22,14 @@ export class AudioService {
       });
   }
 
-  encodeWithEchoHiding(audioFile: File, textFile: File) {
+  encodeWithEchoHiding(audioFile: File, textFile: File, delay:number) {
     const formData = new FormData();
     formData.append('audioFile', audioFile);
     formData.append('textFile', textFile);
 
-    return this.http.post(encodeEchoHidingUrl, formData,
+    return this.http.post(encodeEchoHidingUrl(delay), formData,
       {
-        headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': 'application/octetstream' },
+        headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': '*' },
         responseType: 'blob'
       });
   }
