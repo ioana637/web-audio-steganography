@@ -10,6 +10,18 @@ export function encodeLsbUrl(indexBit: number, stepByte: number) {
     }
     return url;
 }
+
+export function decodeLsbUrl(indexBit: number, stepByte: number, textLength: number) {
+    let url = `${baseUrl}/decode/lsb?textLength=${textLength}`;
+    if (indexBit) {
+        url = `${url}&bitIndex=${indexBit}`;
+    } 
+    if (stepByte) {
+        url = `${url}&stepByte=${stepByte}`;
+    }
+    return url;
+}
+
 export function encodeEchoHidingUrl(delay: number) {
     return `${baseUrl}/echoHiding?delay=${delay}`;
 } 

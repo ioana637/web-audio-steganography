@@ -14,6 +14,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'web-audio-steganography';
 
   fileAudio: File = null;
+  fileAudioDecode: File = null;
   fileText: File = null;
   audioType = 'data:audio/wav;base64,';
 
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   stepByte: number;
   maximumValueForStep: number;
   bitIndex: number;
+  textLength: number;
   delayEchoHiding = 0;
 
   constructor(private sanitizer: DomSanitizer,
@@ -53,6 +55,17 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  previewAudioDecode(event){
+    this.fileAudioDecode = event.target.files[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(<File>this.fileAudioDecode);
+    reader.onload = (_event) => {
+      const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
+      this.resultAudioUrl = blob.createObjectURL(this.fileAudioDecode);
+      document.getElementById('audioControlDecode').setAttribute('src', this.resultAudioUrl);
+    }
+  }
+
   previewText(event) {
     this.fileText = event.target.files[0];
     let fileReader = new FileReader();
@@ -70,14 +83,23 @@ export class AppComponent implements OnInit, OnDestroy {
     }));
   }
 
+  decodeWithLSB() {
+    this.subscriptions.push(this.audioService.decodeWithLSB(this.fileAudio, this.bitIndex, this.stepByte, this.textLength).subscribe((res) => {
+      console.log(res);
+    }, (err) => {
+      console.log(err);
+    }));
+  }
+
   private processAudioResult(res: Blob) {
-    const fileAudioResult = fromBlobToFile(res, 'result.wav', this.fileAudio.name);
+    this.fileAudioDecode = fromBlobToFile(res, 'result.wav', this.fileAudio.name);
     var reader = new FileReader();
-    reader.readAsDataURL(<File>fileAudioResult);
+    reader.readAsDataURL(<File>this.fileAudioDecode);
     reader.onload = (_event) => {
       const blob = this.winRef.nativeWindow.URL || this.winRef.nativeWindow.webkitURL;
-      this.resultAudioUrl = blob.createObjectURL(fileAudioResult);
+      this.resultAudioUrl = blob.createObjectURL(this.fileAudioDecode);
       document.getElementById('audioControlResult').setAttribute('src', this.resultAudioUrl);
+      document.getElementById('audioControlDecode').setAttribute('src', this.resultAudioUrl);
     };
   }
 

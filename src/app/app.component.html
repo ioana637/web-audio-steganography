@@ -66,5 +66,38 @@
   </p-tabPanel>
   <p-tabPanel header="Decode">
     <h2>Decode</h2>
+    <div class="row m-3">
+      <div class="col-3">
+        <audio controls id="audioControlDecode">
+          <source [src]="resultAudioUrl" type="audio/mpeg;audio/wave" id="audioSource">
+        </audio>
+      </div>
+      <div class="col-3" *ngIf="fileAudioDecode">
+        {{fileAudioDecode.name}}
+      </div>
+      <div class="col-2">
+        Load audio to decode
+      </div>
+      <div class="col-4">
+        <input type="file" id="fileAudioDecode" name="fileAudioDecode" value="" accept="audio/mpeg;audio/wav"
+          (change)="previewAudioDecode($event)" placeholder="Load audio to decode" />
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col-2">
+        <input [(ngModel)]="bitIndex" type="number" min="0" max="7" placeholder="Bit Index">
+      </div>
+      <div class="col-2">
+        <input [(ngModel)]="stepByte" type="number" min="1" [max]="maximumValueForStep"
+          (change)="changeStepByte($event)" placeholder="Step Byte">
+      </div>
+      <div class="col-2">
+        <input [(ngModel)]="textLength" type="number" min="1" placeholder="Text Length" required>
+      </div>
+      <div class="col-5">
+        <button class="btn btn-primary" (click)="decodeWithLSB()">Decode with LSB</button>
+      </div>
+
+    </div>
   </p-tabPanel>
 </p-tabView>

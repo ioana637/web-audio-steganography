@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { encodeEchoHidingUrl, encodeLsbUrl } from './urls';
+import { encodeEchoHidingUrl, encodeLsbUrl, decodeLsbUrl } from './urls';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,15 @@ export class AudioService {
       {
         headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': 'application/octetstream' },
         responseType: 'blob'
+      });
+  }
+
+  decodeWithLSB(audioFile: File, bitIndex: number, stepByte: number, textLength: number) {
+    const formData = new FormData();
+    formData.append('audioFile', audioFile);
+    return this.http.post(decodeLsbUrl(bitIndex, stepByte, textLength), formData,
+      {
+        headers: { 'Access-Control-Allow-Origin': 'http://localhost:4200', 'Accept': '*' },
       });
   }
 
