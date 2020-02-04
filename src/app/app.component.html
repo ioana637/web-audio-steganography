@@ -103,9 +103,32 @@
       <div class="col-6">
         Hidden message
       </div>
-      <div class="col-6" >
+      <div class="col-6">
         {{hiddenMessage}}
       </div>
     </div>
+  </p-tabPanel>
+  <p-tabPanel header="Waveform">
+    <div class="row d-flex" *ngIf="true">
+      <div class="col-12">
+        <iframe style="width: 100%; height: 100vh;"
+          src="https://convert.ing-now.com/mp3-audio-waveform-graphic-generator/"></iframe>
+
+      </div>
+    </div>
+
+    <div class="row" *ngIf="false">
+      <div class="col-6">
+        <input type="file" id="fileAudioWaveform" name="fileAudioWaveform" value="" accept="audio/mpeg;audio/wav"
+          (change)="previewAudioWaveform($event)" />
+      </div>
+    </div>
+
+    <div class="row" *ngIf="false">
+      <div class="col-12">
+        <canvas id="view" style="width: 500px; height: 300px;"></canvas>
+      </div>
+    </div>
+
   </p-tabPanel>
 </p-tabView>
